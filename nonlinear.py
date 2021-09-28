@@ -1,5 +1,5 @@
 import math
-
+import numpy as np
 
 
 def newton(x_0, maxErr = 0.0000000001) -> str:
@@ -18,9 +18,9 @@ def sekant(x_0, x_1, maxErr = 0.0000000001):
     """Tilnærming til en rot og antall iterasjoner brukt 
     gitt to startpunkt x_0, x_1 samt en nøyaktighet maxErr"""
     iter = 0
-    x_next = 0
+    x_next = 0; x_curr = math.inf
     
-    while abs(f(x_next)) > maxErr:
+    while abs(x_curr-x_next) > maxErr:
         iter += 1
         x_curr = (x_0*f(x_1)-x_1*f(x_0))/(f(x_1)-f(x_0))
         if f(x_0)*f(x_1) == 0:
@@ -30,17 +30,18 @@ def sekant(x_0, x_1, maxErr = 0.0000000001):
         x_next = (x_0*f(x_1)-x_1*f(x_0))/(f(x_1)-f(x_0))
     return f"{x_0:.10f} etter {iter} iterasjoner"
 
-def halvering(a, b, maxErr = 0.00001):
+def halvering(a, b, maxErr = 0.0000000001):
     iter = 0
-    x = 0
+    x = a
     while abs(f(x)) > maxErr:
+        iter += 1
+        x_last = x
         x = (a+b)/2
-        if f(x)*b < 0:
+        if f(x)*f(b) < 0:
             a = x
         else:
             b = x
-        iter += 1
-    return f"{x:.10f} etter {iter} iterasjoner"
+    return f"{(x+x_last)/2:.10f} etter {iter} iterasjoner"
 
 if __name__ == "__main__":
     def f(x : int = 0) -> float:
@@ -60,8 +61,8 @@ if __name__ == "__main__":
     print(sekant(1.6, 2))
 
     print("\nHalveringsmetoden")
-    print(halvering(-1, -0.9))
-    print(halvering(0.9, 1.1))
-    print(halvering(1.6, 2))
+    print(halvering(-0.9, -0.8))
+    print(halvering(0.9, 1))
+    print(halvering(1.8, 1.9))
 
 
