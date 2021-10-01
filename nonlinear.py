@@ -12,7 +12,7 @@ def newton(x_0, maxErr = 0.0000000001) -> str:
     
     return f"{x:.10f} etter {iter} iterasjoner"
 
-def sekant(x_0, x_1, maxErr = 0.0000000001):
+def sekant(x_0, x_1, f, maxErr = 0.0000000001):
     """Tilnærming til en rot og antall iterasjoner brukt 
     gitt to startpunkt x_0, x_1 samt en toleranse maxErr"""
     iter = 0
@@ -23,7 +23,7 @@ def sekant(x_0, x_1, maxErr = 0.0000000001):
         x_0 = x_1
         x_1 = x_curr
         x_next = (x_0*f(x_1)-x_1*f(x_0))/(f(x_1)-f(x_0))
-    return f"{x_0:.10f} etter {iter} iterasjoner"
+    return (f"{x_0:.10f} etter {iter} iterasjoner",x_0)
 
 def halvering(a, b, maxErr = 0.0000000001):
     """Tilnærming til en rot og antall iterasjoner brukt 
@@ -53,9 +53,9 @@ if __name__ == "__main__":
     print(newton(2))
 
     print("\nSekantmetoden:")
-    print(sekant(-1, -0.9))
-    print(sekant(0.9, 1.1))
-    print(sekant(1.6, 2))
+    print(sekant(-1, -0.9, f)[0])
+    print(sekant(0.9, 1.1, f)[0])
+    print(sekant(1.6, 2, f)[0])
 
     print("\nHalveringsmetoden")
     print(halvering(-0.9, -0.8))
